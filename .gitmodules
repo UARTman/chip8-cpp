@@ -4,3 +4,7 @@
 [submodule "imgui-sfml"]
 	path = imgui-sfml
 	url = https://github.com/eliasdaler/imgui-sfml
+[submodule "ImGuiFileDialog"]
+	path = ImGuiFileDialog
+	url = https://github.com/aiekick/ImGuiFileDialog
+	branch = Lib_Only
