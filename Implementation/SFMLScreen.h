@@ -2,9 +2,10 @@
 
 #include "Core/Screen.h"
 #include <SFML/Graphics.hpp>
+#include "common.h"
 
 namespace SFMLImpl {
-    class SFMLScreen : public Core::Screen {
+    class SHARED_EXPORT SFMLScreen : public Core::Screen {
     public:
         sf::Texture m_texture;
         std::array<uint8_t, 4 * 64 * 32> m_framebuffer = {};
