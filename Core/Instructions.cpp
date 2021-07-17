@@ -118,6 +118,9 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
     }
     // DRW Vx, Vy, nibble
     if (opcode == 0xD) {
+        if (m_registerI + n - 1 >= 4096) {
+            throw CPUException();
+        }
         m_registers[15] = (uint8_t) m_screen.DrawSprite(m_registers[x], m_registers[y], &m_memory[m_registerI], n);
     }
 
@@ -158,6 +161,9 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
         }
         // LD B, Vx
         if (byte == 0x33) {
+            if (m_registerI + 2 >= 4096) {
+                throw CPUException();
+            }
             uint8_t val = m_registers[x];
             m_memory[m_registerI] = val / 100;
             m_memory[m_registerI + 1] = (val / 10) % 10;
@@ -165,14 +171,18 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
         }
         // LD [I], Vx
         if (byte == 0x55) {
-            // TODO: Memory check
+            if (m_registerI + x >= 4096) {
+                throw CPUException();
+            }
             for (int i = 0; i <= x; ++i) {
                 m_memory[m_registerI + i] = m_registers[i];
             }
         }
         // LD Vx, [I]
         if (byte == 0x65) {
-            // TODO: Memory check
+            if (m_registerI + x >= 4096) {
+                throw CPUException();
+            }
             for (int i = 0; i <= x; ++i) {
                 m_registers[i] = m_memory[m_registerI + i];
             }

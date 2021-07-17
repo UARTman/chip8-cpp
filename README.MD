@@ -20,6 +20,6 @@ make
 ## TODO
 - [ ] Keyboard support
 - [ ] Sound
-- [ ] Memory safety checks
+- [x] Memory safety checks
 - [ ] Graceful error handling
 - [x] Screen architecture refactoring
