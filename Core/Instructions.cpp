@@ -73,12 +73,12 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
         // ADD Vx, Vy
         if (n == 4) {
             uint16_t result = m_registers[x] + m_registers[y];
-            m_registers[15] = (uint8_t)(result > 255);
-            m_registers[x] = (uint8_t)result;
+            m_registers[15] = (uint8_t) (result > 255);
+            m_registers[x] = (uint8_t) result;
         }
         // SUB Vx, Vy
         if (n == 5) {
-            m_registers[15] = (uint8_t)(m_registers[x] > m_registers[y]);
+            m_registers[15] = (uint8_t) (m_registers[x] > m_registers[y]);
             m_registers[x] = m_registers[x] - m_registers[y];
         }
         // SHR Vx
@@ -88,7 +88,7 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
         }
         //SUBN Vx, Vy
         if (n == 7) {
-            m_registers[15] = (uint8_t)(m_registers[y] > m_registers[x]);
+            m_registers[15] = (uint8_t) (m_registers[y] > m_registers[x]);
             m_registers[x] = m_registers[y] - m_registers[x];
         }
         // SHL Vx
@@ -129,6 +129,7 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
         if (byte == 0x9E) {
             // TODO: Keyboard
         }
+        // SKNP Vx
         if (byte == 0xA1) {
             // TODO: Keyboard
         }

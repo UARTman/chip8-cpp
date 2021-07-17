@@ -51,9 +51,4 @@ namespace Core {
     class CPUException : public std::exception {
 
     };
-
-
 }
-
-
-
