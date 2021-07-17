@@ -71,7 +71,7 @@ void Core::CPU::Tick() {
     }
     m_cycle_end = std::chrono::steady_clock::now();
     long x = std::chrono::duration_cast<std::chrono::microseconds>(m_cycle_end - m_cycle_begin).count();
-    if (x > 1000) {
+    if (x > 1000 * 1000 / 60 / 10) {
         SingleStep();
         m_cycle_begin = std::chrono::steady_clock::now();
     }
