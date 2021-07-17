@@ -22,4 +22,4 @@ make
 - [ ] Sound
 - [ ] Memory safety checks
 - [ ] Graceful error handling
-- [ ] Screen architecture refactoring
+- [x] Screen architecture refactoring
