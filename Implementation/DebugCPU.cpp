@@ -75,6 +75,8 @@ void SFMLImpl::DebugCPU::Debug() {
     ImGui::SameLine();
     KeyboardButton(0xF);
 
+    ImGui::Text("ST: %d", m_soundTimer);
+
     ImGui::End();
 }
 

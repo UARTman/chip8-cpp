@@ -40,7 +40,7 @@ Here's how it's done:
 
 ## TODO
 - [x] Keyboard support
-- [ ] Sound
+- [x] Sound
 - [x] Memory safety checks
 - [ ] Graceful error handling
 - [x] Screen architecture refactoring

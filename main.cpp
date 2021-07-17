@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <imgui-SFML.h>
 #include "Implementation/DebugCPU.h"
 #include "Implementation/SFMLScreen.h"
@@ -13,22 +14,25 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "CHIP8 Emulator");
     ImGui::SFML::Init(window);
 
-//    std::ifstream ifs("pong.ch8", std::ios::binary|std::ios::ate);
-//    std::ifstream::pos_type pos = ifs.tellg();
-//
-//    std::vector<char>  result(pos);
-//    ifs.seekg(0, std::ios::beg);
-//    ifs.read(&result[0], pos);
-//    std::cout << result.size() << "\n";
+    sf::Sound beep;
+    sf::SoundBuffer beepBuffer;
 
-    std::vector<uint8_t> result = {
+    std::vector<float> samples = {};
+    for (int i = 0; i < 44100 * 0.4; ++i) {
+        double x = std::sin(3.14 * 2 / 100);
+        samples.push_back((float) x);
+    }
+    beepBuffer.loadFromSamples( (sf::Int16 *) (&samples[0]), samples.size(), 1, 44100);
+    beep.setBuffer(beepBuffer);
+
+    std::vector<uint8_t> rom  = {
             0x60, 0x00, 0x61, 0x00, 0xA2, 0x22, 0xC2, 0x01, 0x32, 0x01, 0xA2, 0x1E, 0xD0, 0x14, 0x70, 0x04, 0x30,
             0x40, 0x12, 0x04, 0x60, 0x00, 0x71, 0x04, 0x31, 0x20, 0x12, 0x04, 0x12, 0x1C, 0x80, 0x40, 0x20, 0x10,
             0x20, 0x40, 0x80, 0x10};
 
     SFMLImpl::SFMLScreen screen;
     SFMLImpl::DebugCPU CPU(screen);
-    CPU.LoadRom(result);
+    CPU.LoadRom(rom);
 
     sf::Sprite sprite(screen.m_texture);
 
@@ -63,8 +67,10 @@ int main() {
         ImGui::SFML::Render(window);
         window.display();
         CPU.Tick();
+        if (CPU.m_soundTimer > 0 && beep.getStatus() != sf::SoundSource::Playing) {
+            beep.play();
+        }
     }
-
 
     return 0;
 }

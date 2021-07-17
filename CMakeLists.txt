@@ -13,7 +13,7 @@ include( InstallRequiredSystemLibraries )
 include("${PROJECT_SOURCE_DIR}/cmake/GitCheckout.cmake")
 
 find_package(SFML 2.5 COMPONENTS graphics audio system REQUIRED)
-set(SFML_LIBS sfml-graphics sfml-window sfml-system)
+set(SFML_LIBS sfml-graphics sfml-window sfml-system sfml-audio)
 
 # Initialize imgui-sfml
 set(BUILD_SHARED_LIBS TRUE)
