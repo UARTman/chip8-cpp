@@ -39,7 +39,7 @@ Here's how it's done:
 - The executable and all the dlls it needs are in the `bin` subdirectory of the install prefix.
 
 ## TODO
-- [ ] Keyboard support
+- [x] Keyboard support
 - [ ] Sound
 - [x] Memory safety checks
 - [ ] Graceful error handling

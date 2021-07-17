@@ -125,13 +125,20 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
     }
 
     if (opcode == 0xE) {
+        if (m_registers[x] >= 16) {
+            throw CPUException();
+        }
         // SKP Vx
         if (byte == 0x9E) {
-            // TODO: Keyboard
+            if (m_keyboard[m_registers[x]]) {
+                m_programCounter += 2;
+            }
         }
         // SKNP Vx
         if (byte == 0xA1) {
-            // TODO: Keyboard
+            if (!m_keyboard[m_registers[x]]) {
+                m_programCounter += 2;
+            }
         }
     }
 
@@ -142,7 +149,8 @@ void Core::CPU::ExecuteInstruction(uint16_t t_instruction) {
         }
         // LD Vx, K
         if (byte == 0x0A) {
-            // TODO: Keyboard
+            m_executionState = CPUExecutionState::WAITING_FOR_KEYPRESS;
+            m_keyPressTargetRegister = x;
         }
         // LD DT, Vx
         if (byte == 0x15) {

@@ -6,18 +6,22 @@
 #include "chrono"
 enum class CPUExecutionState {
     PAUSED,
-    RUNNING
+    RUNNING,
+    WAITING_FOR_KEYPRESS
 };
 namespace Core {
     class CPU {
     public:
         std::array<uint8_t, 16> m_registers{};
         std::array<uint8_t, 4096> m_memory{};
+        std::array<bool, 16> m_keyboard{};
+        uint8_t m_keyPressTargetRegister{};
         uint16_t m_programCounter = 0;
         uint16_t m_registerI = 0;
         Screen &m_screen;
         uint8_t m_delayTimer = 0;
         uint8_t m_soundTimer = 0;
+
 
         std::chrono::steady_clock::time_point m_cycle_begin = std::chrono::steady_clock::now();
         std::chrono::steady_clock::time_point m_cycle_end = std::chrono::steady_clock::now();
@@ -29,6 +33,7 @@ namespace Core {
         void LoadRom(std::vector<uint8_t> &t_rom);
         void SingleStep();
         void Tick();
+        void OnKeyPressed(uint8_t key);
 
         explicit CPU(Screen &mScreen) : m_screen(mScreen) {
             Reset();

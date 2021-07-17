@@ -66,7 +66,7 @@ void Core::CPU::UpdateTimers() {
 }
 
 void Core::CPU::Tick() {
-    if (m_executionState == CPUExecutionState::PAUSED) {
+    if (m_executionState != CPUExecutionState::RUNNING) {
         return;
     }
     m_cycle_end = std::chrono::steady_clock::now();
@@ -74,6 +74,13 @@ void Core::CPU::Tick() {
     if (x > 1000) {
         SingleStep();
         m_cycle_begin = std::chrono::steady_clock::now();
+    }
+}
+
+void Core::CPU::OnKeyPressed(uint8_t key) {
+    if (m_executionState == CPUExecutionState::WAITING_FOR_KEYPRESS) {
+        m_executionState = CPUExecutionState::RUNNING;
+        m_registers[m_keyPressTargetRegister] = key;
     }
 }
 
